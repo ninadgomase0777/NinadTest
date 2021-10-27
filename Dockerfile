@@ -14,5 +14,5 @@ COPY package*.json ./
 RUN npm install
 RUN npm link express
 COPY . .
-EXPOSE  3000
+EXPOSE  8080
 CMD ["node", "server.js"]
