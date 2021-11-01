@@ -23,6 +23,9 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - echo Writing image definitions file...
       - printf '[{"name":"Trade","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json 
+      - cat imagedefinitions.json
+      - echo Updating ECSfargate service ...  
+      - aws ecs describe-services --services xxxxxxxxxxxxxxxxx 
+      - aws ecs update-service --service xxxxxxxxxxxxxxxxx --desired-count 2 --no-force-new-deployment 
 artifacts:
     files: imagedefinitions.json
