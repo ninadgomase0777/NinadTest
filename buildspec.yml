@@ -1,32 +1,25 @@
-version: 0.2phases: 
-  
-  pre_build: 
-    commands: 
-    - echo Logging in to Amazon ECR.... 
-    - aws --version
-    # update the following line with your own region
-    - $(aws ecr get-login --region us-east-1 --no-include-email)
-    - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-    - IMAGE_TAG=${COMMIT_HASH:=latest}
-    - REPOSITORY_URI=645369028999.dkr.ecr.us-east-1.amazonaws.com/test
-  build: 
-    commands: 
-    - echo Build started on `date` 
-    - echo Building the Docker image... 
-    # update the following line with the name of your own ECR repository
-    - docker build -t $REPOSITORY_URI:latest .
-    # update the following line with the URI of your own ECR repository (view the Push Commands in the console)
-    - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG 
-  post_build: 
-    commands: 
-    - echo Build completed on `date` 
-    - echo pushing to repo
-    # update the following line with the URI of your own ECR repository
-    - docker push $REPOSITORY_URI:latest
-    - docker push $REPOSITORY_URI:$IMAGE_TAG
-    - echo Writing image definitions file... 
-    #- printf '[{"ImageURI":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
-    - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+version: 0.2
+
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)  
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t test .
+      - docker tag test:latest 645369028999.dkr.ecr.us-east-1.amazonaws.com/test:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push 645369028999.dkr.ecr.us-east-1.amazonaws.com/test:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"Trade","imageUri":"%s"}]' 645369028999.dkr.ecr.us-east-1.amazonaws.com/test:latest > imagedefinitions.json
+      - cat imagedefinitions.json 
 artifacts:
-  files:
-    - imageDetail.json
+    files: imagedefinitions.json
