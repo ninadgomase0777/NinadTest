@@ -11,8 +11,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t trade .
-      - docker tag trade:latest 645369028999.dkr.ecr.us-east-1.amazonaws.com/trade:latest
+      - docker build -t test .
+      - docker tag test:latest 645369028999.dkr.ecr.us-east-1.amazonaws.com/trade:latest
   post_build:
     commands:
       - echo Build completed on `date`
