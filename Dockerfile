@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+#FROM ubuntu:20.04
+FROM 645369028999.dkr.ecr.us-east-1.amazonaws.com/test:latest
 RUN apt-get update -y 
 RUN apt-get install g++ -y 
 RUN apt install curl -y 
