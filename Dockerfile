@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 RUN apt-get update -y 
 RUN apt-get install g++ -y 
 RUN apt install curl -y 
@@ -7,7 +7,7 @@ RUN apt-get install --yes nodejs
 RUN apt-get install --yes build-essential
 #RUN mkdir -p usr/src/app
 # check the path 
-FROM node:12
+FROM node:14
 WORKDIR /nodejsapp
 
 COPY package*.json ./
