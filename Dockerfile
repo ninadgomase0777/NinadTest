@@ -8,7 +8,7 @@ RUN apt-get install --yes nodejs
 RUN apt-get install --yes build-essential
 #RUN mkdir -p usr/src/app
 # check the path 
-FROM node:14
+#FROM node:14
 WORKDIR /nodejsapp
 
 COPY package*.json ./
