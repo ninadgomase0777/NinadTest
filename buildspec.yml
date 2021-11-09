@@ -11,15 +11,15 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t test .
-      - docker tag test:latest 668853609085.dkr.ecr.ap-south-1.amazonaws.com/image:latest
+      - docker build -t trade .
+      - docker tag trade:latest 668853609085.dkr.ecr.ap-south-1.amazonaws.com/trade:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push 668853609085.dkr.ecr.ap-south-1.amazonaws.com/image:latest
+      - docker push 668853609085.dkr.ecr.ap-south-1.amazonaws.com/trade:latest
       - echo Writing image definitions file...
-      - printf '[{"name":"test","imageUri":"%s"}]' 668853609085.dkr.ecr.ap-south-1.amazonaws.com/image:latest > imagedefinitions.json
+      - printf '[{"name":"Trade","imageUri":"%s"}]' 668853609085.dkr.ecr.ap-south-1.amazonaws.com/trade:latest > imagedefinitions.json
       - cat imagedefinitions.json 
 artifacts:
     files: imagedefinitions.json
